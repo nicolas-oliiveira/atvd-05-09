@@ -298,13 +298,22 @@ fun CamposTexto() {
             onValueChange = { text.value = it },
             modifier = Modifier
                 .fillMaxWidth()
+                .background(Color.White)
                 .height(100.dp)
-                .padding(10.dp)
-                .border(width = 1.dp, color = Color.Black, shape = RoundedCornerShape(8.dp)),
+                .padding(bottom = 16.dp)
+                .border(1.dp, Color.Black),
             label = { Text("Observação") },
         )
     }
+/*
 
+modifier = Modifier.menuAnchor()
+                .fillMaxWidth()
+                .background(Color.White)
+                //.size(100.dp)
+                //.clip(shape = CircleShape)
+                .border(1.dp, Color.Black),
+ */
 
 }
 
@@ -321,7 +330,7 @@ fun EditableExposedDropdownMenuSample() {
         modifier = Modifier
             .width(1020.dp)
             .background(Color.White)
-            .clip(shape = CircleShape)
+            //.clip(shape = CircleShape)
     ) {
         TextField(
             // The `menuAnchor` modifier must be passed to the text field for correctness.
@@ -334,8 +343,9 @@ fun EditableExposedDropdownMenuSample() {
             modifier = Modifier.menuAnchor()
                 .fillMaxWidth()
                 .background(Color.White)
-                .clip(shape = CircleShape)
-                .border(1.dp, Color.Black, CircleShape),
+                //.size(100.dp)
+                //.clip(shape = CircleShape)
+                .border(1.dp, Color.Black),
         )
         // filter options based on text field value
         val filteringOptions = options.filter { it.contains(selectedOptionText, ignoreCase = true) }
