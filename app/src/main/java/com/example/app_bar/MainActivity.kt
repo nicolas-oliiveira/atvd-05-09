@@ -281,7 +281,7 @@ fun CamposTexto() {
                     .fillMaxWidth()
                     .padding(8.dp)
                     .background(Color.White)
-                    .clip(shape = CircleShape)
+                    //.clip(shape = CircleShape)
             ) {
                 Text(
                     text = if (selectedDateText.isNotEmpty()) {
