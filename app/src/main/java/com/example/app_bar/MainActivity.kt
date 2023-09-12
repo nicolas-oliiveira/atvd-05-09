@@ -98,7 +98,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             App_barTheme {
-
+                App()
             }
         }
     }
@@ -136,71 +136,71 @@ class MainActivity : ComponentActivity() {
     }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SimpleTopAppBar() {
-    Scaffold (
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        "App firestore - Cadastro",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { /* doSomething() */ }) {
-                        Icon(
-                            imageVector = Icons.Filled.Menu,
-                            contentDescription = "Localized description"
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun SimpleTopAppBar() {
+        Scaffold (
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(
+                            "App firestore - Cadastro",
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = { /* doSomething() */ }) {
+                            Icon(
+                                imageVector = Icons.Filled.Menu,
+                                contentDescription = "Localized description"
+                            )
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = { /* doSomething() */ }) {
+                            Icon(
+                                imageVector = Icons.Filled.Favorite,
+                                contentDescription = "Localized description"
+                            )
+                        }
                     }
-                },
-                actions = {
-                    IconButton(onClick = { /* doSomething() */ }) {
-                        Icon(
-                            imageVector = Icons.Filled.Favorite,
-                            contentDescription = "Localized description"
-                        )
-                    }
+                )
+            },
+            content = { innerPadding ->
+                LazyColumn(
+                    contentPadding = innerPadding,
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+
+
                 }
-            )
-        },
-        content = { innerPadding ->
-            LazyColumn(
-                contentPadding = innerPadding,
-                verticalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-
-
             }
-        }
 
-    )
-}
+        )
+    }
 
 
     //Button
-@Composable
- fun ElevatedButtonSample() {
-     ElevatedButton(onClick = { /* Do something! */ }) { Text("Cadastrar") }
- }
+    @Composable
+    fun ElevatedButtonSample() {
+        ElevatedButton(onClick = { /* Do something! */ }) { Text("Cadastrar") }
+    }
 
-@Composable
- fun ElevatedButtonSample2() {
-     ElevatedButton(onClick = { /* Do something! */ }) { Text("Cancelar") }
- }
+    @Composable
+    fun ElevatedButtonSample2() {
+        ElevatedButton(onClick = { /* Do something! */ }) { Text("Cancelar") }
+    }
 
 
-// original do projeto
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    // original do projeto
+    @Composable
+    fun Greeting(name: String, modifier: Modifier = Modifier) {
+        Text(
+            text = "Hello $name!",
+            modifier = modifier
+        )
+    }
 
 
 
@@ -312,6 +312,55 @@ fun CamposTexto() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditableExposedDropdownMenuSample() {
+    val options = listOf("São Paulo", "Rio de Janeiro", "Bahia", "Amazonas", "Mato Grosso do Sul")
+    var expanded by remember { mutableStateOf(false) }
+    var selectedOptionText by remember { mutableStateOf("") }
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded },
+        modifier = Modifier
+            .width(1020.dp)
+            .background(Color.White)
+            .clip(shape = CircleShape)
+    ) {
+        TextField(
+            // The `menuAnchor` modifier must be passed to the text field for correctness.
+
+            value = selectedOptionText,
+            onValueChange = { selectedOptionText = it },
+            label = { Text("Origem") },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+            modifier = Modifier.menuAnchor()
+                .fillMaxWidth()
+                .background(Color.White)
+                .clip(shape = CircleShape)
+                .border(1.dp, Color.Black, CircleShape),
+        )
+        // filter options based on text field value
+        val filteringOptions = options.filter { it.contains(selectedOptionText, ignoreCase = true) }
+        if (filteringOptions.isNotEmpty()) {
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+            ) {
+                filteringOptions.forEach { selectionOption ->
+                    DropdownMenuItem(
+                        text = { Text(selectionOption) },
+                        onClick = {
+                            selectedOptionText = selectionOption
+                            expanded = false
+                        },
+                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                    )
+                }
+            }
+        }
+    }
+}
+
+/*fun EditableExposedDropdownMenuSample() {
+   // val options = listOf("São Paulo", "Rio de Janeiro", "Bahia", "Amazonas")
     val options = listOf("São Paulo", "Rio de Janeiro", "Bahia", "Amazonas")
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf("") }
@@ -359,11 +408,7 @@ fun EditableExposedDropdownMenuSample() {
         }
     }
 }
-
-
-
-//
-
+*/
 
 
 
